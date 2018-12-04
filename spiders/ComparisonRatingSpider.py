@@ -11,5 +11,5 @@ class ComparisonRatingSpider(scrapy.Spider):
 
     def parse(self, response):
         item = MovieMetacriticItem()
-        item['rating'] = response.css('.metascore_w').extract()
+        item['rating'] = response.css('.metascore_w').extract_first()
         yield item
