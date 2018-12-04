@@ -1,4 +1,3 @@
-# server.py
 import json
 
 from klein import route, run
@@ -6,6 +5,7 @@ from scrapy import signals
 from scrapy.crawler import CrawlerRunner
 from spiders.ListSpider import ListSpider
 from spiders.PositionSpider import PositionSpider
+from spiders.ComparisonRatingSpider import ComparisonRatingSpider
 
 class MyCrawlerRunner(CrawlerRunner):
 
@@ -34,10 +34,18 @@ def search(request, query):
     return deferred
 
 @route("/title/<id>")
-def getmovie(request, id, ):
+def getmovie(request, id):
     runner = MyCrawlerRunner()
     deferred = runner.crawl(PositionSpider, id = id)
     deferred.addCallback(return_spider_output)
     return deferred
+
+@route("/metacritic-rating/<title>")
+def getMetacriticRating(request, title):
+    runner = MyCrawlerRunner()
+    deferred = runner.crawl(ComparisonRatingSpider, title = title)
+    deferred.addCallback(return_spider_output)
+    return deferred
+
 
 run("localhost", 8080)

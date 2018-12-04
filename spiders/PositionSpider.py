@@ -1,5 +1,5 @@
 import scrapy
-from items import MovieItem
+from items import MovieImdbItem
 
 
 class PositionSpider(scrapy.Spider):
@@ -9,8 +9,8 @@ class PositionSpider(scrapy.Spider):
         yield scrapy.Request('http://www.imdb.com/title/%s' % self.id, callback=self.parseMovie)
 
     def parseMovie(self, response):
-        item = MovieItem()
-        item['title'] = response.css('h1[itemprop=name]::text').extract_first()
+        item = MovieImdbItem()
         item['year'] = response.css('span[id=titleYear] a::text').extract_first()
-        item['plot'] = response.css('[itemprop=description] p::text').extract_first()
+        item['plot'] = response.css('div[class=summary_text]::text').extract_first()
+        item['rating'] = response.css('span[itemprop=ratingValue]::text').extract_first()
         yield item

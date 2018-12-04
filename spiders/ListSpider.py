@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 import scrapy
 from items import ListItem
-from items import MovieItem
+from items import MovieImdbItem
 
 
 class ListSpider(scrapy.Spider):
@@ -11,8 +10,11 @@ class ListSpider(scrapy.Spider):
         yield scrapy.Request('http://www.imdb.com/find?q=%s&s=tt&exact=true&ref_=fn_tt_ex' % self.query)
 
     def parse(self, response):
+        print(response.css('.findResult'))
         for pos in response.css('.findResult'):
+            print(pos)
             item = ListItem()
             item['title'] = pos.css('.result_text a::text').extract_first()
             item['year'] = pos.css('.result_text::text').re('\d+')[0]
+            item['id'] = pos.css('.findResult .result_text a::attr(href)').extract()[0].split('/')[2]
             yield item
