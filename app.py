@@ -7,6 +7,7 @@ from spiders.ListSpider import ListSpider
 from spiders.PositionSpider import PositionSpider
 from spiders.ComparisonRatingSpider import ComparisonRatingSpider
 
+
 class MyCrawlerRunner(CrawlerRunner):
 
     def crawl(self, crawler_or_spidercls, *args, **kwargs):
@@ -23,27 +24,31 @@ class MyCrawlerRunner(CrawlerRunner):
     def return_items(self, result):
         return self.items
 
+
 def return_spider_output(output):
     return json.dumps([dict(item) for item in output])
+
 
 @route("/search/<query>")
 def search(request, query):
     runner = MyCrawlerRunner()
-    deferred = runner.crawl(ListSpider, query = query)
+    deferred = runner.crawl(ListSpider, query=query)
     deferred.addCallback(return_spider_output)
     return deferred
+
 
 @route("/title/<id>")
 def getmovie(request, id):
     runner = MyCrawlerRunner()
-    deferred = runner.crawl(PositionSpider, id = id)
+    deferred = runner.crawl(PositionSpider, id=id)
     deferred.addCallback(return_spider_output)
     return deferred
+
 
 @route("/metacritic-rating/<title>")
 def getMetacriticRating(request, title):
     runner = MyCrawlerRunner()
-    deferred = runner.crawl(ComparisonRatingSpider, title = title)
+    deferred = runner.crawl(ComparisonRatingSpider, title=title)
     deferred.addCallback(return_spider_output)
     return deferred
 
