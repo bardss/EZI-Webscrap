@@ -16,24 +16,29 @@ IMBD Python Webscrapper
   
   
 ## DTO: (all fields are strings)
-
     class MovieImdbItem(scrapy.Item):
-
-      plot = scrapy.Field()
     
-      year = scrapy.Field()
-    
-      rating = scrapy.Field()
-
+        plot = scrapy.Field()
+        
+        year = scrapy.Field()
+        
+        rating = scrapy.Field()
+        
+        poster = scrapy.Field()
+        
+        director = scrapy.Field()
+        
 
     class ListItem(scrapy.Item):
-
-      title = scrapy.Field()
     
-      year = scrapy.Field()
-    
-      id = scrapy.Field()
-
+        title = scrapy.Field()
+        
+        year = scrapy.Field()
+        
+        id = scrapy.Field()
+        
+        poster = scrapy.Field()
+        
 
     class MovieMetacriticItem(scrapy.Item):
 
