@@ -19,4 +19,5 @@ class ListItem(scrapy.Item):
 
 class MovieMetacriticItem(scrapy.Item):
     rating = scrapy.Field()
+    year = scrapy.Field()
     pass

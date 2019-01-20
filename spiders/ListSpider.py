@@ -6,7 +6,7 @@ class ListSpider(scrapy.Spider):
     name = 'seriesSpider'
 
     def start_requests(self):
-        yield scrapy.Request('http://www.imdb.com/find?q=%s&s=tt&exact=true&ref_=fn_tt_ex' % self.query)
+        yield scrapy.Request('http://www.imdb.com/find?q=%s&s=tt&ref_=fn_tt_ex' % self.query)
 
     def parse(self, response):
         print(response.css('.findResult'))
