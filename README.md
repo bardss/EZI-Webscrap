@@ -42,4 +42,6 @@ IMBD Python Webscrapper
 
     class MovieMetacriticItem(scrapy.Item):
 
-      rating = scrapy.Field()
+        rating = scrapy.Field()
+        
+        year = scrapy.Field()
